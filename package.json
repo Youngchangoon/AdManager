@@ -1,0 +1,28 @@
+{
+  "name": "com.monsterplanet.admanager",
+  "displayName": "AdManager",
+  "version": "0.0.1",
+  "unity": "2020.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monpl/AdManager.git"
+  },
+  "author": {
+    "name": "Youngchan Kim",
+    "email": "kyc521@monsterplanet.co.kr",
+    "url": "https://github.com/youngchangoon"
+  },
+  "keywords": [
+    "MonsterPlanet",
+    "AdManager"
+  ],
+  "description": "MonsterPlanet's AdManager",
+  "dependencies": {
+  },
+  "samples": [
+    {
+      "displayName": "Tests",
+      "path": "Tests~"
+    }
+  ]
+}
