@@ -1,28 +1,23 @@
-{
-  "name": "com.monsterplanet.admanager",
+﻿{
+  "name": "ZeroPackage.Ads",
   "displayName": "AdManager",
+  "description": "This plugin is management ads with IronSource sdk",
   "version": "0.0.1",
   "unity": "2020.1",
+  "license": "MIT",
+  "keywords": [
+    "Ads",
+    "IronSource"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/monpl/AdManager.git"
+    "url": "git+https://github.com/Youngchangoon/AdManager.git"
   },
   "author": {
-    "name": "Youngchan Kim",
-    "email": "kyc521@monsterplanet.co.kr",
-    "url": "https://github.com/youngchangoon"
+    "name": "Youngchangoon",
+    "email": "youngchangoon521@gmail.com",
+    "url": "https://github.com/Youngchangoon"
   },
-  "keywords": [
-    "MonsterPlanet",
-    "AdManager"
-  ],
-  "description": "MonsterPlanet's AdManager",
   "dependencies": {
-  },
-  "samples": [
-    {
-      "displayName": "Tests",
-      "path": "Tests~"
-    }
-  ]
+  }
 }

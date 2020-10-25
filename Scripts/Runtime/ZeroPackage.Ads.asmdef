@@ -1,0 +1,8 @@
+﻿{
+  "name": "ZeroPackage.Ads",
+  "references": ["IronSource"],
+  "optionalUnityReferences": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}
