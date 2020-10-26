@@ -1,5 +1,5 @@
 ﻿{
-  "name": "YoungPackage.Ads",
+  "name": "com.youngpackage.ads",
   "displayName": "AdManager",
   "description": "This plugin is management ads with IronSource sdk",
   "version": "0.0.1",
