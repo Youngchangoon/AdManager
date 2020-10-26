@@ -1,7 +1,7 @@
 ﻿{
-  "name": "ZeroPackage.Ads.Editor",
+  "name": "YoungPackage.Ads.Editor",
   "references": [
-    "ZeroPackage.Ads"
+    "YoungPackage.Ads"
   ],
   "optionalUnityReferences": [],
   "includePlatforms": [

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ZeroPackage.Ads
+namespace YoungPackage.Ads
 {
     public partial class AdManager : MonoBehaviour
     {
@@ -53,7 +53,7 @@ namespace ZeroPackage.Ads
 
         public AdManager Init(bool isAdRemove = false)
         {
-            _adSettings = Resources.Load<AdSettings>("ZeroPackage/Ads/AdSettings");
+            _adSettings = Resources.Load<AdSettings>("YoungPackage/Ads/AdSettings");
 
             if (_adSettings == null)
             {

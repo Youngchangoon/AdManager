@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ZeroPackage.Ads
+namespace YoungPackage.Ads
 {
     public class AdSettings : ScriptableObject
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ZeroPackage.Ads
+namespace YoungPackage.Ads
 {
     public partial class AdManager
     {

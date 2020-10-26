@@ -1,4 +1,4 @@
-namespace ZeroPackage.Ads
+namespace YoungPackage.Ads
 {
     // Banner Methods
     public partial class AdManager

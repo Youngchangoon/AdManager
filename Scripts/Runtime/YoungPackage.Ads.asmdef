@@ -1,5 +1,5 @@
 ﻿{
-  "name": "ZeroPackage.Ads",
+  "name": "YoungPackage.Ads",
   "references": ["IronSource"],
   "optionalUnityReferences": [],
   "includePlatforms": [],

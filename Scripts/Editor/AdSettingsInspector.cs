@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace ZeroPackage.Ads
+namespace YoungPackage.Ads
 {
     [CustomEditor(typeof(AdSettings))]
     public class AdSettingsInspector : Editor

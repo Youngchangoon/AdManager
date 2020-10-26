@@ -1,6 +1,6 @@
 using System;
 
-namespace ZeroPackage.Ads
+namespace YoungPackage.Ads
 {
     public partial class AdManager
     {

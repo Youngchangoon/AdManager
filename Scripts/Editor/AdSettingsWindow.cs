@@ -2,16 +2,16 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace ZeroPackage.Ads
+namespace YoungPackage.Ads
 {
     public class AdSettingsWindow : EditorWindow
     {
         private AdSettings _adSettings;
     
-        private const string devFilePath = "Assets/AdManager/Resources/ZeroPackage/Ads/AdSettings.asset";
-        private const string releaseFilePath = "Packages/com.ZeroPackage.AdManager/Resources/ZeroPackage/Ads/AdSettings.asset";
+        private const string devFilePath = "Assets/AdManager/Resources/YoungPackage/Ads/AdSettings.asset";
+        private const string releaseFilePath = "Packages/com.YoungPackage.AdManager/Resources/YoungPackage/Ads/AdSettings.asset";
 
-        [MenuItem("ZeroPackage/Ads/AdSettings")]
+        [MenuItem("YoungPackage/Ads/AdSettings")]
         public static void ShowExample()
         {
             var window = GetWindow<AdSettingsWindow>("AdSettings", true);
@@ -21,7 +21,7 @@ namespace ZeroPackage.Ads
 
         public void OnEnable()
         {
-            var filePath = Directory.Exists("Assets/AdManager/Resources/ZeroPackage/Ads") ? devFilePath : releaseFilePath;
+            var filePath = Directory.Exists("Assets/AdManager/Resources/YoungPackage/Ads") ? devFilePath : releaseFilePath;
         
             if(!File.Exists(filePath))
                 AssetDatabase.CreateAsset(CreateInstance<AdSettings>(), filePath);
