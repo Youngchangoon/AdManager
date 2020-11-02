@@ -17,6 +17,9 @@ namespace YoungPackage.Ads
             if (_isRemovedAd == true)
                 return;
 
+            if (!_adSettings.isUsingBanner)
+                return;
+
             if (isAlwaysShow)
             {
                 if (IsLoadedBanner)
@@ -62,7 +65,7 @@ namespace YoungPackage.Ads
         {
             IsLoadedBanner = true;
 
-            if (_isRemovedAd)
+            if (_isRemovedAd || !_adSettings.isUsingBanner)
             {
                 _showingBanner = false;
                 IronSource.Agent.destroyBanner();

@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b886a8562ec94af1b8ce05588f1e4449, type: 3}
   m_Name: AdSettings
   m_EditorClassIdentifier: 
-  IosKey: 
-  AndKey: 
-  IsAdDebug: 0
+  iosKey: adsf
+  andKey: asdf
+  isAdDebug: 0
+  isAlwaysTrueInEditor: 1
+  isUsingReward: 1
+  isUsingInter: 1
+  isUsingBanner: 0

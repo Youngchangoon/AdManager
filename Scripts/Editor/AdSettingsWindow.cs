@@ -8,8 +8,8 @@ namespace YoungPackage.Ads
     {
         private AdSettings _adSettings;
     
-        private const string devFilePath = "Assets/AdManager/Resources/YoungPackage/Ads/AdSettings.asset";
-        private const string releaseFilePath = "Packages/com.YoungPackage.AdManager/Resources/YoungPackage/Ads/AdSettings.asset";
+        private const string DevFilePath = "Assets/AdManager/Resources/AdSettings.asset";
+        private const string ReleaseFilePath = "Packages/com.YoungPackage.AdManager/Resources/AdSettings.asset";
 
         [MenuItem("YoungPackage/Ads/AdSettings")]
         public static void ShowExample()
@@ -17,12 +17,13 @@ namespace YoungPackage.Ads
             var window = GetWindow<AdSettingsWindow>("AdSettings", true);
             window.minSize = new Vector2(300, 400);
             window.ShowUtility();
+            AssetDatabase.SaveAssets();
         }
 
         public void OnEnable()
         {
-            var filePath = Directory.Exists("Assets/AdManager/Resources/YoungPackage/Ads") ? devFilePath : releaseFilePath;
-        
+            var filePath = Directory.Exists("Assets/AdManager") ? DevFilePath : ReleaseFilePath;
+
             if(!File.Exists(filePath))
                 AssetDatabase.CreateAsset(CreateInstance<AdSettings>(), filePath);
 
@@ -36,18 +37,41 @@ namespace YoungPackage.Ads
         
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Android Key", GUILayout.MaxWidth(100f));
-            _adSettings.AndKey = EditorGUILayout.TextField(_adSettings.AndKey);
+            _adSettings.andKey = EditorGUILayout.TextField(_adSettings.andKey);
             EditorGUILayout.EndHorizontal();
         
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("iOS Key", GUILayout.MaxWidth(100f));
-            _adSettings.IosKey = EditorGUILayout.TextField(_adSettings.IosKey);
+            _adSettings.iosKey = EditorGUILayout.TextField(_adSettings.iosKey);
             EditorGUILayout.EndHorizontal();
             
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Debug Mode", GUILayout.MaxWidth(100f));
-            _adSettings.IsAdDebug = EditorGUILayout.Toggle(_adSettings.IsAdDebug);
+            _adSettings.isAdDebug = EditorGUILayout.Toggle(_adSettings.isAdDebug);
             EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("isEditorAlwaysTrue", GUILayout.MaxWidth(100f));
+            _adSettings.isAlwaysTrueInEditor = EditorGUILayout.Toggle(_adSettings.isAlwaysTrueInEditor);
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Using Reward", GUILayout.MaxWidth(100f));
+            _adSettings.isUsingReward = EditorGUILayout.Toggle(_adSettings.isUsingReward);
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Using Inter", GUILayout.MaxWidth(100f));
+            _adSettings.isUsingInter = EditorGUILayout.Toggle(_adSettings.isUsingInter);
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Using Banner", GUILayout.MaxWidth(100f));
+            _adSettings.isUsingBanner = EditorGUILayout.Toggle(_adSettings.isUsingBanner);
+            EditorGUILayout.EndHorizontal();
+
+            if (GUILayout.Button("Save"))
+                _adSettings.SaveAsset();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace YoungPackage.Ads
         public bool IsRewardVideoReady(string rewardVideoPlacement = "DefaultRewardedVideo")
         {
 #if UNITY_EDITOR
-            return true;
+            return _adSettings.isAlwaysTrueInEditor;
 #endif
 
             return IronSource.Agent.isRewardedVideoAvailable() &&
@@ -36,10 +36,10 @@ namespace YoungPackage.Ads
         /// <summary>
         /// 리워드 비디오 재생
         /// </summary>
-        /// <param name="onEndVideoAction"> 비디오가 닫힐때 발생하는 이벤트 / string: placementName, bool: isRewarded</param>
         /// <param name="rewardVideoPlacement">비디오 이름</param>
-        public void ShowRewardVideo(Action<string, bool> onEndVideoAction = null,
-            string rewardVideoPlacement = "DefaultRewardedVideo")
+        /// <param name="onEndVideoAction"> 비디오가 닫힐때 발생하는 이벤트 / string: placementName, bool: isRewarded</param>
+        public void ShowRewardVideo(string rewardVideoPlacement = "DefaultRewardedVideo",
+            Action<string, bool> onEndVideoAction = null)
         {
             if (_isShowingVideo)
                 return;

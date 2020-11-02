@@ -18,13 +18,13 @@ namespace YoungPackage.Ads
 
                 if (FindObjectsOfType<AdManager>().Length > 1)
                 {
-                    Debug.LogError("[Singleton] Singleton more than 1...! It's wrong!");
+                    Debug.LogError("[Young] Singleton more than 1...! It's wrong!");
                     return _instance;
                 }
 
                 if (_instance == null)
                 {
-                    var newObj = new GameObject("[Zero] AdManager");
+                    var newObj = new GameObject("[Young] AdManager");
                     _instance = newObj.AddComponent<AdManager>();
                 }
                 
@@ -53,27 +53,21 @@ namespace YoungPackage.Ads
 
         public AdManager Init(bool isAdRemove = false)
         {
-            _adSettings = Resources.Load<AdSettings>("YoungPackage/Ads/AdSettings");
+            if (!CheckInit())
+                return this;
+            
+            var adUnits = GetAdUnits(_adSettings.isUsingReward, _adSettings.isUsingInter, _adSettings.isUsingBanner);
 
-            if (_adSettings == null)
-            {
-                Debug.LogError("AD SETTINGS IS NULL!");
-                return this;
-            }
-            
-            if (_isSettingDone)
-                return this;
-            
 #if UNITY_IOS && !UNITY_EDITOR
-            IronSource.Agent.init(_adSettings.IosKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+            IronSource.Agent.init(_adSettings.IosKey, adUnits);
 #elif UNITY_ANDROID && !UNITY_EDITOR
-            IronSource.Agent.init(_adSettings.AndKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+            IronSource.Agent.init(_adSettings.AndKey, adUnits);
 #else
-            IronSource.Agent.init(_adSettings.AndKey, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.BANNER);
+            IronSource.Agent.init(_adSettings.andKey, adUnits);
 #endif
             IronSource.Agent.shouldTrackNetworkState(true);
 
-            if (_adSettings.IsAdDebug)
+            if (_adSettings.isAdDebug)
             {
                 IronSource.Agent.validateIntegration();
                 IronSource.Agent.setAdaptersDebug(true);
@@ -81,7 +75,7 @@ namespace YoungPackage.Ads
 
             LinkToEvents();
 
-            if (isAdRemove == false)
+            if (isAdRemove == false && _adSettings.isUsingBanner)
             {
                 IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
                 IronSource.Agent.loadInterstitial();
@@ -102,8 +96,12 @@ namespace YoungPackage.Ads
         /// <returns></returns>
         public AdManager AddAdAction(Action adStartAction = null, Action adEndAction = null, bool resetAll = true)
         {
+            if (resetAll)
+                RemoveAllAdAction();
+            
             _adStartAction += adStartAction;
             _adEndAction += adEndAction;
+            
             return this;
         }
 
@@ -125,29 +123,79 @@ namespace YoungPackage.Ads
                 _rewardVideoAvailabilityActionDic[placementName] += action;
             else
                 _rewardVideoAvailabilityActionDic.Add(placementName, action);
-
+            
+            _rewardVideoAvailabilityActionDic[placementName].Invoke(IsRewardVideoReady(placementName));
             return this;
+        }
+
+        public AdManager RemoveAllAvailabilityActions()
+        {
+            _rewardVideoAvailabilityActionDic.Clear();
+            return this;
+        }
+
+        private bool CheckInit()
+        {
+            _adSettings = Resources.Load<AdSettings>("AdSettings");
+
+            if (_adSettings == null)
+            {
+                Debug.LogError("AD SETTINGS IS NULL!");
+                return false;
+            }
+
+            if (_isSettingDone)
+                return false;
+
+            return true;
+        }
+
+        private string[] GetAdUnits(bool isUsingReward, bool isUsingInter, bool isUsingBanner)
+        {
+            var ret = new List<string>();
+            
+            if(isUsingReward)
+                ret.Add(IronSourceAdUnits.REWARDED_VIDEO);
+            if(isUsingInter)
+                ret.Add(IronSourceAdUnits.INTERSTITIAL);
+            if(isUsingBanner)
+                ret.Add(IronSourceAdUnits.BANNER);
+            
+            return ret.ToArray();
         }
 
         private void LinkToEvents()
         {
-            // Banner
-            IronSourceEvents.onBannerAdLoadedEvent += OnLoadedBannerEvent;
+            if (_adSettings.isUsingBanner)
+            {
+                // Banner
+                IronSourceEvents.onBannerAdLoadedEvent += OnLoadedBannerEvent;
+            }
 
-            // Inter
-            IronSourceEvents.onInterstitialAdClosedEvent += InterstitialAdClosedEvent;
-            IronSourceEvents.onInterstitialAdOpenedEvent += InterstitialAdOpenedEvent;
+            if (_adSettings.isUsingInter)
+            {
+                // Inter
+                IronSourceEvents.onInterstitialAdClosedEvent += InterstitialAdClosedEvent;
+                IronSourceEvents.onInterstitialAdOpenedEvent += InterstitialAdOpenedEvent;
+            }
 
-            // Reward
-            IronSourceEvents.onRewardedVideoAdClosedEvent += RewardVideoAdClosedEvent;
-            IronSourceEvents.onRewardedVideoAdRewardedEvent += RewardVideoAdRewardedEvent;
-            IronSourceEvents.onRewardedVideoAvailabilityChangedEvent += RewardVideoAvailabilityChangedEvent;
+            if (_adSettings.isUsingReward)
+            {
+                // Reward
+                IronSourceEvents.onRewardedVideoAdClosedEvent += RewardVideoAdClosedEvent;
+                IronSourceEvents.onRewardedVideoAdRewardedEvent += RewardVideoAdRewardedEvent;
+                IronSourceEvents.onRewardedVideoAvailabilityChangedEvent += RewardVideoAvailabilityChangedEvent;
+            }
         }
         
         // ---- Unity APIs ----
         private void OnApplicationPause(bool isPaused)
         {
             IronSource.Agent.onApplicationPause(isPaused);
+            
+            if(!_adSettings.isUsingBanner)
+                return;
+            
             CancelInvoke(nameof(ShowDelayBanner));
 
             if (_isRemovedAd)
