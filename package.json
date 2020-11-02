@@ -1,8 +1,8 @@
-{
+﻿{
   "name": "com.youngpackage.ads",
   "displayName": "AdManager",
   "description": "This plugin is management ads with IronSource sdk",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "unity": "2020.1",
   "license": "MIT",
   "keywords": [
