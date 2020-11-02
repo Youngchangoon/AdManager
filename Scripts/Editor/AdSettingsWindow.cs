@@ -9,7 +9,7 @@ namespace YoungPackage.Ads
         private AdSettings _adSettings;
     
         private const string DevFilePath = "Assets/AdManager/Resources/AdSettings.asset";
-        private const string ReleaseFilePath = "Packages/com.YoungPackage.AdManager/Resources/AdSettings.asset";
+        private const string ReleaseFilePath = "Packages/com.youngpackage.ads/Resources/AdSettings.asset";
 
         [MenuItem("YoungPackage/Ads/AdSettings")]
         public static void ShowExample()
